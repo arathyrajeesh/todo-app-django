@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+</head>
+<body>
+
+
+<h2>Task List</h2>
+<a href="{% url 'addtask_view' %}" class="button">Add New Task</a>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td class="{% if task.complete_task %}completed{% endif %}">{{ task.title }}</td>
+        <td class="{% if task.complete_task %}completed{% endif %}">{{ task.description }}</td>
+        <td>{{ task.created_at }}</td>
+        <td>{{ task.complete_task|yesno:"Completed,Pending" }}</td>
+        <td>
+            {% if not task.complete_task %}
+            <a href="{% url 'complete_task' task.id %}" class="button">Mark Complete</a>
+            {% else %}
+            -
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No tasks found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
