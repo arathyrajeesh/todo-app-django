@@ -24,6 +24,7 @@
                         <th>Description</th>
                         <th>Created At</th>
                         <th>Status</th>
+                        <th>Due Date</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -40,6 +41,7 @@
                                 <span class="badge bg-warning text-dark">Pending</span>
                             {% endif %}
                         </td>
+                        <td>{{ task.due_date|date:"Y-m-d" }}</td>                        
                         <td class="text-center">
                             {% if not task.complete_task %}
                                 <a href="{% url 'complete_task' task.id %}" class="btn btn-sm btn-success"> Mark Complete</a>
