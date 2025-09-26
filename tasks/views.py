@@ -23,7 +23,9 @@ def add_task(request):
 
 def task_list(request):
     tasks = Task.objects.all().order_by('-created_at')
-    return render(request, 'task_list.html', {'tasks': tasks})
+    false = Task.objects.all().filter(complete_task = False).count()
+    return render(request, 'task_list.html', {'tasks': tasks,
+                                                'false':false})
 
 
 def complete_task(request, task_id):
