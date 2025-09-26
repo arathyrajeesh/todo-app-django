@@ -53,8 +53,6 @@
                         <td class="text-center">
                             {% if not task.complete_task %}
                                 <a href="{% url 'complete_task' task.id %}" class="btn btn-sm btn-success"> Mark Complete</a>
-                            {% else %}
-                                <span class="text-muted">—</span>
                             {% endif %}
                             <a href="{% url 'update_task' task.id %}" class="btn btn-sm btn-primary ms-1"> Update</a>
                             <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger"
