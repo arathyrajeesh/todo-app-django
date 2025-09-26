@@ -48,12 +48,15 @@ def update_task(request, task_id):
         title = request.POST.get('title')
         description = request.POST.get('description')
         due_date = request.POST.get('due_date')
+        status = request.POST.get('status')  
 
         if title and description:
             task.title = title
             task.description = description
             task.due_date = due_date if due_date else None
+            task.complete_task = True if status == "on" else False  
             task.save()
             return redirect('task_list')
 
     return render(request, 'update_task.html', {'task': task})
+
