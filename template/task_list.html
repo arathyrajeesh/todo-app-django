@@ -40,7 +40,13 @@
                             {% if task.complete_task %}
                                 <span class="badge bg-success">Completed</span>
                             {% else %}
-                                <span class="badge bg-warning text-dark">Pending</span>
+                                {% if task.due_date == today %}
+                                    <span class="badge bg-danger">Due Today</span>
+                                {% elif task.due_date and task.due_date < today %}
+                                    <span class="badge bg-dark">Overdue</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% endif %}
                             {% endif %}
                         </td>
                         <td>{{ task.due_date|date:"Y-m-d" }}</td>                        

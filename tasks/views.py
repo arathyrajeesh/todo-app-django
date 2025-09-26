@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from .models import Task
@@ -24,8 +25,10 @@ def add_task(request):
 def task_list(request):
     tasks = Task.objects.all().order_by('-created_at')
     false = Task.objects.all().filter(complete_task = False).count()
+    today=date.today()
     return render(request, 'task_list.html', {'tasks': tasks,
-                                                'false':false})
+                                                'false':false,
+                                                'today':today})
 
 
 def complete_task(request, task_id):
