@@ -21,7 +21,7 @@
     </div>
     
 
-    <div class="border rounded p-2 d-inline-block bg-light shadow-sm gap-3 mb-3">
+    <div class="border rounded p-2 d-inline-block bg-body shadow-sm gap-3 mb-3">
         <h6 class="mb-0">Pending Tasks: {{ pending_count }}</h6>
     </div>
 
@@ -79,32 +79,29 @@
 const toggleBtn = document.getElementById("theme-toggle");
 const body = document.body;
 
-// Apply saved theme on load
 if (localStorage.getItem("theme") === "dark") {
     body.setAttribute("data-bs-theme", "dark");
-    toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
     toggleBtn.classList.remove("btn-outline-dark");
     toggleBtn.classList.add("btn-outline-light");
 } else {
-    // Default to light mode
     body.setAttribute("data-bs-theme", "light");
-    toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
     toggleBtn.classList.remove("btn-outline-light");
     toggleBtn.classList.add("btn-outline-dark");
 }
 
-// Toggle handler
 toggleBtn.addEventListener("click", () => {
     if (body.getAttribute("data-bs-theme") === "light") {
         body.setAttribute("data-bs-theme", "dark");
         localStorage.setItem("theme", "dark");
-        toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
         toggleBtn.classList.remove("btn-outline-dark");
         toggleBtn.classList.add("btn-outline-light");
     } else {
         body.setAttribute("data-bs-theme", "light");
         localStorage.setItem("theme", "light");
-        toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
         toggleBtn.classList.remove("btn-outline-light");
         toggleBtn.classList.add("btn-outline-dark");
     }
