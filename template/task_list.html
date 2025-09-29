@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Task List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body data-bs-theme="light">
@@ -11,14 +12,14 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Task List</h2>
-        <a href="{% url 'addtask_view' %}" class="btn btn-primary">Add New Task</a>
+        <div class="d-flex align-items-center gap-2">
+            <a href="{% url 'addtask_view' %}" class="btn btn-primary">Add New Task</a>
+            <button id="theme-toggle" class="btn btn-outline-dark btn-sm">
+                <i class="fa-solid fa-sun"></i>
+            </button>
+        </div>
     </div>
-
-    <div class="d-flex justify-content-end mb-3">
-        <button id="theme-toggle" class="btn btn-outline-dark btn-sm">
-            🌙 Dark Mode
-        </button>
-    </div>
+    
 
     <div class="border rounded p-2 d-inline-block bg-light shadow-sm gap-3 mb-3">
         <h6 class="mb-0">Pending Tasks: {{ pending_count }}</h6>
@@ -75,72 +76,40 @@
     </div>
     
     <script>
-    const table = document.getElementById("task-table");
-    let dragSrcRow = null;
-    
-    function handleDragStart(e) {
-        dragSrcRow = this;
-        e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("text/html", this.outerHTML);
-        this.classList.add("table-primary");
-    }
-    
-    function handleDragOver(e) {
-        if (e.preventDefault) e.preventDefault();
-        e.dataTransfer.dropEffect = "move";
-        return false;
-    }
-    
-    function handleDrop(e) {
-        if (e.stopPropagation) e.stopPropagation();
-        if (dragSrcRow != this) {
-            this.parentNode.removeChild(dragSrcRow);
-            const dropHTML = e.dataTransfer.getData("text/html");
-            this.insertAdjacentHTML("beforebegin", dropHTML);
-            addDnDHandlers(table.querySelectorAll("tbody tr")); 
-        }
-        return false;
-    }
-    
-    function handleDragEnd(e) {
-        this.classList.remove("table-primary");
-    }
-    
-    function addDnDHandlers(rows) {
-        rows.forEach(row => {
-            row.addEventListener("dragstart", handleDragStart, false);
-            row.addEventListener("dragover", handleDragOver, false);
-            row.addEventListener("drop", handleDrop, false);
-            row.addEventListener("dragend", handleDragEnd, false);
-        });
-    }
-    
-    addDnDHandlers(table.querySelectorAll("tbody tr"));
-    const toggleBtn = document.getElementById("theme-toggle");
-    const body = document.body;
+const toggleBtn = document.getElementById("theme-toggle");
+const body = document.body;
 
-    if (localStorage.getItem("theme") === "dark") {
+// Apply saved theme on load
+if (localStorage.getItem("theme") === "dark") {
+    body.setAttribute("data-bs-theme", "dark");
+    toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    toggleBtn.classList.remove("btn-outline-dark");
+    toggleBtn.classList.add("btn-outline-light");
+} else {
+    // Default to light mode
+    body.setAttribute("data-bs-theme", "light");
+    toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    toggleBtn.classList.remove("btn-outline-light");
+    toggleBtn.classList.add("btn-outline-dark");
+}
+
+// Toggle handler
+toggleBtn.addEventListener("click", () => {
+    if (body.getAttribute("data-bs-theme") === "light") {
         body.setAttribute("data-bs-theme", "dark");
-        toggleBtn.textContent = "☀️ Light Mode";
+        localStorage.setItem("theme", "dark");
+        toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
         toggleBtn.classList.remove("btn-outline-dark");
         toggleBtn.classList.add("btn-outline-light");
+    } else {
+        body.setAttribute("data-bs-theme", "light");
+        localStorage.setItem("theme", "light");
+        toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        toggleBtn.classList.remove("btn-outline-light");
+        toggleBtn.classList.add("btn-outline-dark");
     }
+});
 
-    toggleBtn.addEventListener("click", () => {
-        if (body.getAttribute("data-bs-theme") === "light") {
-            body.setAttribute("data-bs-theme", "dark");
-            localStorage.setItem("theme", "dark");
-            toggleBtn.textContent = "☀️ Light Mode";
-            toggleBtn.classList.remove("btn-outline-dark");
-            toggleBtn.classList.add("btn-outline-light");
-        } else {
-            body.setAttribute("data-bs-theme", "light");
-            localStorage.setItem("theme", "light");
-            toggleBtn.textContent = "🌙 Dark Mode";
-            toggleBtn.classList.remove("btn-outline-light");
-            toggleBtn.classList.add("btn-outline-dark");
-        }
-    });
 </script>
 </div>
 </body>

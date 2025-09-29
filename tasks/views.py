@@ -59,10 +59,10 @@ def update_task(request, task_id):
 
 def task_list(request):
     tasks = Task.objects.all().order_by('-created_at')
-    pending_count = Task.objects.filter(complete_task=False).count()
+    pending_count = Task.objects.all().filter(complete_task=False).count()
     today=date.today()
     return render(request, 'task_list.html', {'tasks': tasks,
-                                                'false':pending_count,
+                                                'pending_count':pending_count,
                                                 'today':today})
 
 
