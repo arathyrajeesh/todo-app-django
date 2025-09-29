@@ -116,5 +116,33 @@
     }
     
     addDnDHandlers(table.querySelectorAll("tbody tr"));
-    </script>
+    const toggleBtn = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    if (localStorage.getItem("theme") === "dark") {
+        body.setAttribute("data-bs-theme", "dark");
+        toggleBtn.textContent = "☀️ Light Mode";
+        toggleBtn.classList.remove("btn-outline-dark");
+        toggleBtn.classList.add("btn-outline-light");
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        if (body.getAttribute("data-bs-theme") === "light") {
+            body.setAttribute("data-bs-theme", "dark");
+            localStorage.setItem("theme", "dark");
+            toggleBtn.textContent = "☀️ Light Mode";
+            toggleBtn.classList.remove("btn-outline-dark");
+            toggleBtn.classList.add("btn-outline-light");
+        } else {
+            body.setAttribute("data-bs-theme", "light");
+            localStorage.setItem("theme", "light");
+            toggleBtn.textContent = "🌙 Dark Mode";
+            toggleBtn.classList.remove("btn-outline-light");
+            toggleBtn.classList.add("btn-outline-dark");
+        }
+    });
+</script>
+</div>
+</body>
+</html>
     
