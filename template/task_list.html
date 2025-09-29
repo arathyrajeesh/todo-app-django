@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             {% for task in tasks %}
-                <tr draggable="true" data-id="{{ task.id }}"ondragstart="dragit(event)" ondragover="dragover(event)">
+                <tr draggable="true" data-id="{{ task.id }}"ondragstart="drag(event)" ondragover="dragover(event)">
                     <td>{{ task.title }}</td>
                     <td>{{ task.description }}</td>
                     <td>{{ task.created_at|date:"Y-m-d" }}</td>
@@ -105,7 +105,7 @@ toggleBtn.addEventListener("click", () => {
     }
 });
 let shadow
-function dragit(event){
+function drag(event){
     shadow=event.target;
 }
 function dragover(e){
