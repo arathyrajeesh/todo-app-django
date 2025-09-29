@@ -14,9 +14,7 @@
         <h2 class="mb-0">Task List</h2>
         <div class="d-flex align-items-center gap-2">
             <a href="{% url 'addtask_view' %}" class="btn btn-primary">Add New Task</a>
-            <button id="theme-toggle" class="btn btn-outline-dark btn-sm">
-                <i class="fa-solid fa-sun"></i>
-            </button>
+            <button id="theme-toggle" class="btn btn-outline-dark btn-sm"></button>
         </div>
     </div>
     
@@ -39,7 +37,7 @@
             </thead>
             <tbody>
             {% for task in tasks %}
-                <tr draggable="true" data-id="{{ task.id }}">
+                <tr draggable="true" data-id="{{ task.id }}"ondragstart="dragit(event)" ondragover="dragover(event)">
                     <td>{{ task.title }}</td>
                     <td>{{ task.description }}</td>
                     <td>{{ task.created_at|date:"Y-m-d" }}</td>
@@ -106,6 +104,16 @@ toggleBtn.addEventListener("click", () => {
         toggleBtn.classList.add("btn-outline-dark");
     }
 });
+let shadow
+function dragit(event){
+    shadow=event.target;
+}
+function dragover(e){
+    let children=Array.from(e.target.parentNode.parentNode.children);
+if(children.indexOf(e.target.parentNode)>children.indexOf(shadow))
+    e.target.parentNode.after(shadow);
+    else e.target.parentNode.before(shadow);
+}
 
 </script>
 </div>
