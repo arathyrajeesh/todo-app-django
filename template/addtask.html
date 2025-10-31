@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Add Task{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-black" style="background-color: rgb(189, 87, 87);">
+                    <h4 class="mb-0"> Add Task</h4>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" id="title" name="title" class="form-control" placeholder="Enter task title">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter task description"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="due_date" class="form-label">Due Date</label>
+                            <input type="date" id="due_date" name="due_date" class="form-control" min="{{ today|date:'Y-m-d' }}">
+                        </div>
+
+                        <div class="mb-3 text-center p-3">
+                            <button type="submit" class="btn text-black w-50" style="background-color:rgb(189, 87, 87);">
+                                Add Task
+                            </button>
+                        </div>                    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
